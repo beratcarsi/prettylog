@@ -18,6 +18,11 @@ namespace Web.Controllers
         {
             return View();
         }
+        
+        public ActionResult Test()
+        {
+            return View();
+        }
 
         [HttpPost]
         public JsonResult Types(string query, DateTime start, DateTime end)
