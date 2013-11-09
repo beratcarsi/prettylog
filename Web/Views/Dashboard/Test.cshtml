@@ -76,7 +76,7 @@
                     }
                 },
                 // Initial range: 2012-02-09 to 2012-03-20.
-                'state': { 'range': { 'start': new Date(2012, 1, 9), 'end': new Date(2012, 2, 20) } }
+                'state': { 'range': { 'start': new Date(2012, 1, 5), 'end': new Date(2012, 2, 20) } }
             });
 
 
@@ -102,27 +102,27 @@
                 data.addRow([date, Math.round(low), Math.round(open), Math.round(close), Math.round(high)]);
             }
 
-            
-            // Must wait for the ready event in order to
-            // request the chart and subscribe to 'onmouseover'.
-            google.visualization.events.addListener(control, 'ready', onReady);
+            google.visualization.events.addListener(chart, 'ready', onReady);
 
 
             dashboard.bind(control, chart);
             dashboard.draw(data);
 
             function onReady() {
-                google.visualization.events.addListener(control.getControl(), 'onmouseover', usefulHandler);
+
+                document.getElementById('changeList').onclick = function () {
+                    control.setState({ 'range': { 'start': new Date(2012, 1, 9), 'end': new Date(2012, 2, 10) } });
+                    control.draw();
+                };
+               
+                var state = control.getState();
+                console.log("start: " + state.range.start + " | end: " + state.range.end);
+
             }
 
-            // Called
-            function usefulHandler() {
-                console.log("Mouseover event!");
-            }
         }
 
         google.setOnLoadCallback(drawVisualization);
-        
         
         
     </script>
@@ -132,6 +132,7 @@
         <div id="chart" style='width: 915px; height: 300px;'></div>
         <div id="control" style='width: 915px; height: 50px;'></div>
         <div id="list" style='width: 915px; min-height: 50px; background: beige'></div>
+        <button id="changeList" style='width: 100px; min-height: 50px; background: crimson'>CHANGE</button>
     </div>
   </body>
 </html>
